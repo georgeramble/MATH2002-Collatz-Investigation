@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 from core_lib.collatz_functions import collatz_simulations
 
@@ -50,3 +51,50 @@ def plot_max_excursion(N):
 if __name__ == "__main__":
     plot_stopping_time(2000)
     plot_max_excursion(2000)
+
+def collatz(n):
+    seq=[n]
+    while seq[-1]!=1:
+        if seq[-1]%2==0:
+            seq.append((seq[-1])//2)
+        else:
+            seq.append((3*seq[-1])+1)
+    return seq
+
+def stoptime(n):
+    return len(collatz(n))-1
+
+def maxexcurge(n):
+    return max(collatz(n))
+
+
+    """Maximum excursion and Stopping time on the same plot"""
+def mestplot(n):
+    x=list(range(1,n+1))
+    y=[]  
+    for i in range(1,n+1):
+        y.append(stoptime(i))
+    q=[]
+    for i in range(1,n+1):
+        q.append(maxexcurge(i))
+    plt.plot(x,y,label="stopping time")
+    plt.plot(x,q,label="Max excursion")
+    plt.xlabel("n")
+    plt.legend()
+    plt.show
+
+def correlationplot(n):
+    x=[]
+    for i in range(1,n+1):
+        x.append(stoptime(i))
+    y=[]
+    for i in range(1,n+1):
+        y.append(maxexcurge(i))
+    m,c=np.polyfit(x,y,1)
+    p=np.linspace(min(x),max(x),100)
+    q=m*p+c
+    plt.plot(p,q,color="red",label="Regression line")
+    plt.xlabel("Stopping time")
+    plt.ylabel("Max excursion")
+    plt.scatter(x,y)
+    plt.show()
