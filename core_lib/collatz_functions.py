@@ -1,7 +1,7 @@
 def validate_input(n):
-    # Checks if input is valid
+    # Checks if input is valid (researched how to raise TypeError)
     
-    if not isinstance(n, int):
+    if type(n)!=int:
         raise TypeError("n must be an integer")
     if n<=0:
         raise ValueError("n must be positive")
@@ -10,7 +10,6 @@ def validate_input(n):
     
 def one_step(n):
     # Does one step of the Collatz seq
-    
     validate_input(n)
 
     if n%2==0:
@@ -22,7 +21,6 @@ def one_step(n):
     
 def collatz_sequence(n):
     # Start a Collatz sequence from n
-
     validate_input(n)
 
     seq = [n]
@@ -33,7 +31,7 @@ def collatz_sequence(n):
 
 
 
-def total_stopping_time(n):
+def stopping_time(n):
     # Number of steps needed to reach 1
 
     return len(collatz_sequence(n))-1
@@ -49,8 +47,7 @@ def max_excursion(n):
 
 def collatz_simulations(N):
     # Run Collatz simulations for 1<=n<=N
-    # Returns three seperate lists
-
+    # Returns three seperate lists (starting values, stopping times, max excursions)
     validate_input(N)
 
     starting_values = []
@@ -61,7 +58,7 @@ def collatz_simulations(N):
         seq = collatz_sequence(n)
         
         starting_values.append(n)
-        stopping_times.append(len(seq) - 1)
+        stopping_times.append(len(seq)-1)
         max_values.append(max(seq))
 
     return starting_values, stopping_times, max_values

@@ -1,100 +1,100 @@
+# Section 1 : First look into behaviour of the Collatz Sequence
+
+# Import Python Libraries
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Import Pre-Defined Functions
 from core_lib.collatz_functions import collatz_simulations
 
-
-
-N_values = [1000, 2000, 5000, 10000]
-
-
+# --- ---
 
 def summary_values(N):
-    n_val, stop_t, max_x = collatz_simulations(N)
+    # Prints basic stats for the 1 to N values
+
+    n_val, stop_t, max_exc = collatz_simulations(N)
 
     max_stopping = max(stop_t)
-    n_at_max_stopping = n_val[stop_t.index(max_stopping)]
+    n1 = n_val[stop_t.index(max_stopping)]
 
-    max_exc = max(max_x)
-    n_at_max_exc = n_val[max_x.index(max_exc)]
+    max_exc_value = max(max_exc)
+    n2 = n_val[max_exc.index(max_exc_value)]
 
-    avg_stopping = sum(stop_t) / len(stop_t)
+    average_stopping = sum(stop_t) / len(stop_t)
 
-    print("Maximum stopping time:", max_stopping, "at n =", n_at_max_stopping)
-    print("Maximum excursion:", max_exc, "at n =", n_at_max_exc)
-    print("Average stopping time:", avg_stopping)
+    print("Maximum stopping time =", max_stopping, "at n =", n1)
+    print("Maximum excursion =", max_exc_value, "at n =", n2)
+    print("Average stopping time =", round(average_stopping,3))
 
 
+# Functions to plot Stopping times, Maximum excursion or Both for 'N' values:
 
 def plot_stopping_time(N):
-    n_val, stop_t, max_x = collatz_simulations(N)
+    n_val, stop_t, max_exc = collatz_simulations(N)
+
     plt.figure()
-    plt.plot(n_val, stop_t)
+    plt.plot(n_val, stop_t, linestyle='-', marker='x', markersize=3, linewidth=0.8)
     plt.xlabel("n")
     plt.ylabel("Total stopping time")
-    plt.title(f"Total stopping time for 1 ≤ n ≤ {N}")
+    plt.grid(True, alpha=0.3)
+    plt.title("Stopping time for 1 ≤ n ≤ " + str(N))
+    plt.savefig("figures/section1/stopping_time_N" + str(N) + ".png")
     plt.show()
 
 
 
 def plot_max_excursion(N):
-    n_val, stop_t, max_x = collatz_simulations(N)
+    n_val, stop_t, max_exc = collatz_simulations(N)
+
     plt.figure()
-    plt.plot(n_val, max_x)
+    plt.plot(n_val, max_exc, linestyle='-', marker='x', markersize=3, linewidth=0.8)
     plt.xlabel("n")
     plt.ylabel("Maximum excursion")
+    plt.grid(True, alpha=0.3)
+
+    ymax = np.percentile(max_exc, 95)  # zoom into plot to make more readable
+    plt.ylim(0, ymax)
+
+    plt.title("Maximum excursion for 1 ≤ n ≤ " + str(N))
+    plt.savefig("figures/section1/max_excursion_N" + str(N) + ".png")
+    plt.show()
+
+
+
+def stopping_vs_excursion(N):
+    n_val, stop_t, max_exc = collatz_simulations(N)
+
+    plt.figure()
+    plt.scatter(stop_t, max_exc, s=8)
+    plt.xlabel("Total stopping time")
+    plt.ylabel("Maximum excursion")
     plt.yscale("log")
-    plt.title(f"Maximum excursion for 1 ≤ n ≤ {N} (log scale)")
+    plt.grid(True, alpha=0.3)
+
+    ymax = np.percentile(max_exc, 95)
+    plt.ylim(0, ymax)
+
+    plt.title("Stopping time vs max excursion (1 ≤ n ≤ " + str(N) + ")")
+    plt.savefig("figures/section1/stopping_vs_excursion_N" + str(N) + ".png")
     plt.show()
 
+# Outputs:
 
-if __name__ == "__main__":
-    plot_stopping_time(2000)
-    plot_max_excursion(2000)
+N_values = [50, 100, 200, 500, 1000]
+# Values of N we will consider up to (e.g. collatz_sequence(n), from 1 to N)
 
-def collatz(n):
-    seq=[n]
-    while seq[-1]!=1:
-        if seq[-1]%2==0:
-            seq.append((seq[-1])//2)
-        else:
-            seq.append((3*seq[-1])+1)
-    return seq
+for N in N_values:
 
-def stoptime(n):
-    return len(collatz(n))-1
+    print("\n-----------------------------")
+    print("Running for N =", N)
 
-def maxexcurge(n):
-    return max(collatz(n))
+    summary_values(N)
 
+    plot_stopping_time(N)
+    plot_max_excursion(N)
+    stopping_vs_excursion(N)
 
-    """Maximum excursion and Stopping time on the same plot"""
-def mestplot(n):
-    x=list(range(1,n+1))
-    y=[]  
-    for i in range(1,n+1):
-        y.append(stoptime(i))
-    q=[]
-    for i in range(1,n+1):
-        q.append(maxexcurge(i))
-    plt.plot(x,y,label="stopping time")
-    plt.plot(x,q,label="Max excursion")
-    plt.xlabel("n")
-    plt.legend()
-    plt.show
+# to run in terminal : & "C:\Users\georg\anaconda3.0\python.exe" -m sections.section1_standard_behaviour
 
-def correlationplot(n):
-    x=[]
-    for i in range(1,n+1):
-        x.append(stoptime(i))
-    y=[]
-    for i in range(1,n+1):
-        y.append(maxexcurge(i))
-    m,c=np.polyfit(x,y,1)
-    p=np.linspace(min(x),max(x),100)
-    q=m*p+c
-    plt.plot(p,q,color="red",label="Regression line")
-    plt.xlabel("Stopping time")
-    plt.ylabel("Max excursion")
-    plt.scatter(x,y)
-    plt.show()
+# Note - need to write up about the comparison
+# No relation between max exc and stopping times
