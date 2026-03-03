@@ -26,9 +26,9 @@ def summary_values(N):
 
 
 def plot_stopping_time(N):
-    ns, ts, _ = collatz_simulations(N)
+    n_val, stop_t, max_x = collatz_simulations(N)
     plt.figure()
-    plt.plot(ns, ts)
+    plt.plot(n_val, stop_t)
     plt.xlabel("n")
     plt.ylabel("Total stopping time")
     plt.title(f"Total stopping time for 1 ≤ n ≤ {N}")
@@ -37,9 +37,9 @@ def plot_stopping_time(N):
 
 
 def plot_max_excursion(N):
-    ns, _, mx = collatz_simulations(N)
+    n_val, stop_t, max_x = collatz_simulations(N)
     plt.figure()
-    plt.plot(ns, mx)
+    plt.plot(n_val, max_x)
     plt.xlabel("n")
     plt.ylabel("Maximum excursion")
     plt.yscale("log")
