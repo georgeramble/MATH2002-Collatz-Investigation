@@ -62,3 +62,10 @@ plt.imshow(data,cmap='binary',interpolation='none')
 plt.xlabel("Step")
 plt.ylabel("Starting number")
 plt.show()
+
+"""
+git add .
+git commit -m "add plotting functions / fix matplotlib import"
+git pull --rebase
+git push
+"""
