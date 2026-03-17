@@ -90,3 +90,4 @@ print("All nodes (sorted):")
 print(sorted(all_nodes))
 
 #& "C:\Users\georg\anaconda3.0\python.exe" -m sections.section4_collatz_tree
+#git add . ; git commit -m "collatz tree functions update" ; git push origin main
