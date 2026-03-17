@@ -1,3 +1,6 @@
+# Related sequences, structure analysis
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
