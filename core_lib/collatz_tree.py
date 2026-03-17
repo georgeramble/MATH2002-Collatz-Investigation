@@ -36,10 +36,10 @@ def tree_generator(depth):
         next_level = []
 
         for n in current_level:
-            for parent in collatz_parents(n):
+            for parent in node_parents(n):
                 if parent not in seen:
                     next_level.append(parent)
-                    seen.add(parent)
+                    seen.append(parent)
 
         levels.append(next_level)
 
