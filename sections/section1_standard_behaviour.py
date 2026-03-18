@@ -22,7 +22,7 @@ def plot_stopping_time(n_val, stop_t, N):
     plt.show()
 
 
-def plot_max_excursion(n_val, stop_t, N):
+def plot_max_excursion(n_val, max_exc, N):
     '''
     Function to plot maximum excursion
     '''
@@ -40,7 +40,7 @@ def plot_max_excursion(n_val, stop_t, N):
     plt.show()
 
 
-def stopping_vs_excursion(n_val, stop_t, N):
+def stopping_vs_excursion(stop_t, max_exc, N):
     '''
     Function to plot stopping time against maximum excursion
     '''
@@ -67,23 +67,29 @@ for N in N_values:
     print("\n-----------------------------")
     print("Running for N =", N)
 
-    n_val, stop_t, max_exc = collatz_simulations(N)
+    n_val, stop_t, n_exc = collatz_simulations(N)
 
-    max_stop = max(stop_t)
-    n_stop = n_val[stop_t.index(max_stop)]
+    # Compute ranges first
+    stop_min = min(stop_t)
+    stop_max = max(stop_t)
 
-    max_excursion = max(max_exc)
-    n_exc = n_val[max_exc.index(max_excursion)]
+    exc_min = min(n_exc)
+    exc_max = max(n_exc)
 
-    print("Largest stopping time:", max_stop, "at n =", n_stop)
-    print("Largest maximum excursion:", max_excursion, "at n =", n_exc)
+    # Find where maxima occur
+    n_stop = n_val[stop_t.index(stop_max)]
+    n_exc_at_max = n_val[n_exc.index(exc_max)]
+
+    print("Largest stopping time:", stop_max, "at n =", n_stop)
+    print("Largest maximum excursion:", exc_max, "at n =", n_exc_at_max)
+
     print("Average stopping time:", round(sum(stop_t)/len(stop_t), 3))
-    print("Range of stopping times:", min(stop_t), "to", max(stop_t))
-    print("Range of maximum excursions:", min(max_exc), "to", max(max_exc))
+    print("Range of stopping times:", stop_min, "to", stop_max)
+    print("Range of maximum excursions:", exc_min, "to", exc_max)
 
     plot_stopping_time(n_val, stop_t, N)
-    plot_max_excursion(n_val, max_exc, N)
-    stopping_vs_excursion(stop_t, max_exc, N)
+    plot_max_excursion(n_val, n_exc, N)
+    stopping_vs_excursion(stop_t, n_exc, N)
 
 
 

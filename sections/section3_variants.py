@@ -89,3 +89,6 @@ for name, hit1, hitcap, cycles in results_summary:
     print("Hit cap:", hitcap)
     print("Cycles:", cycles)
     print()
+
+
+#& "C:\Users\georg\anaconda3.0\python.exe" -m sections.section3_variants
