@@ -6,7 +6,7 @@
 
 def node_parents(n):
     '''
-    
+    Creates parent nodes for one value n, similar to doing one_step()
     '''
     parents = []
 
@@ -14,7 +14,7 @@ def node_parents(n):
 
     if (n-1)%3 == 0:
         m = (n-1)//3
-        if m%2 == 1:
+        if m%2 == 1 and m>0:
             parents.append(m)
 
     return parents
@@ -23,7 +23,7 @@ def node_parents(n):
 
 def tree_generator(depth):
     '''
-
+    Generates a set amount of layers of the Collatz Tree
     '''
     levels = []
     levels.append([1])      # level 0 starts with 1

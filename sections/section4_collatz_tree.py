@@ -13,9 +13,9 @@ levels = tree_generator(depth)
 
 print("\nTree structure:")
 
-for i, level in enumerate(levels):
-    print(f"Level {i}: {level}")
-    print(f"Nodes in level: {len(level)}")
+for i in range(len(levels)):
+    print("Level", i, ":", levels[i])
+    print("Nodes in level:", len(levels[i]))
     print()
 
 
