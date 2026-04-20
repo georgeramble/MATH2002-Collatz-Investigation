@@ -1,8 +1,12 @@
-# Related sequences, structure analysis
+### Section 2: Related sequences and further sequence analysis
 
-
+## Import Python libraries:
 import matplotlib.pyplot as plt
 import numpy as np
+
+# --- --- --- --- --- --- --- --- ---
+
+## Core functions:
 
 def parity_sequence(n):
     seq=[]
@@ -26,3 +30,12 @@ plt.imshow(data,cmap='binary',interpolation='none')
 plt.xlabel("Step")
 plt.ylabel("Starting number")
 plt.show()
+
+
+# ...
+
+# --- --- --- --- --- --- --- --- ---
+
+## Plots and outputs:
+
+# ...
