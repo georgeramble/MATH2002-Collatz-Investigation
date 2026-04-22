@@ -1,53 +1,83 @@
 # Section 3: Variants of the Collatz rule
 
+# Import Python libraries
 import matplotlib.pyplot as plt
+import os
 
-# --- --- --- --- --- --- --- --- ---
+# Create plot folder
+os.makedirs("figures/section3", exist_ok=True)
 
-# Core Functions:
+# --- --- --- --- --- --- ---
 
-def variant_step(n, a=3, b=1):
+# Core functions:
+
+def validate_input(n):
+    '''
+    Checks if input is valid
+    '''
+    if type(n) != int:
+        raise TypeError("n must be an integer")
+    if n <= 0:
+        raise ValueError("n must be positive")
+
+
+def variant_step(n, a, b):
+    '''
+    Does one step of a Collatz-type rule
+    '''
+    validate_input(n)
+
     if n % 2 == 0:
         return n // 2
     else:
         return a * n + b
 
 
-def variant_sequence(start, a=3, b=1, max_steps=200, cap=10**6):
-    sequence = [start]
-    seen = [start]
-    n = start
-    status = "max_steps"
+def variant_sequence(start, a, b, max_steps=100, cap=10**6):
+    '''
+    Generates a full sequence for a Collatz-type rule
+    '''
+    validate_input(start)
 
-    for _ in range(max_steps):
+    sequence = [start]
+    seen = {start}
+    n = start
+    status = "step_limit"
+
+    for i in range(max_steps):
         if n == 1:
-            status = "hit_1"
+            status = "reached_1"
             break
 
         n = variant_step(n, a, b)
         sequence.append(n)
 
         if n > cap:
-            status = "hit_cap"
+            status = "too_large"
             break
 
         if n in seen:
             status = "cycle"
             break
 
-        seen.append(n)
+        seen.add(n)
 
     return sequence, status
 
 
-def variant_simulations(N, a=3, b=1, max_steps=200, cap=10**6):
+def variant_simulations(N, a, b, max_steps=100, cap=10**6):
+    '''
+    Runs the variant for all starting values from 1 to N
+    '''
+    validate_input(N)
+
     starting_values = []
     lengths = []
     max_values = []
     statuses = []
 
     for n in range(1, N + 1):
-        seq, status = variant_sequence(n, a=a, b=b, max_steps=max_steps, cap=cap)
+        seq, status = variant_sequence(n, a, b, max_steps=max_steps, cap=cap)
 
         starting_values.append(n)
         lengths.append(len(seq) - 1)
@@ -56,67 +86,51 @@ def variant_simulations(N, a=3, b=1, max_steps=200, cap=10**6):
 
     return starting_values, lengths, max_values, statuses
 
-# --- --- --- --- --- --- --- --- ---
+# --- --- --- --- --- --- ---
 
-# List the variants we will look at
-variants = [
-    ("Standard Collatz (3n+1)", "3n1", 3, 1),
-    ("Variant 5n+1", "5n1", 5, 1),
-    ("Variant 5n+3", "5n3", 5, 3)
-]
+# Functions to summarise and visualise results:
 
+def summary_variant(name, N, a, b, max_steps=100, cap=10**6):
+    n_val, lengths, max_vals, statuses = variant_simulations(N, a, b, max_steps=max_steps, cap=cap)
 
-# Set up starting parameters
-start = 7
-N = 50
-max_steps = 100
-cap = 10**6
-
-
-results_summary = []
-
-
-# Loop the investigation for all variants
-for name, label, a, b in variants:
-
-    print("\n---")
-    print(name)
-
-    seq, status = variant_sequence(start, a=a, b=b, max_steps=max_steps, cap=cap)
-
-    print("Starting value =", start)
-    print("Status:", status)
-    print("Sequence:", seq)
-
-    n_val, lengths, max_vals, statuses = variant_simulations(N, a=a, b=b, max_steps=max_steps, cap=cap)
-
-    hit1 = 0
-    hitcap = 0
+    reached_1 = 0
     cycles = 0
+    too_large = 0
+    step_limit = 0
 
-    for s in statuses:
-        if s == "hit_1":
-            hit1 += 1
-        elif s == "hit_cap":
-            hitcap += 1
-        elif s == "cycle":
+    for status in statuses:
+        if status == "reached_1":
+            reached_1 += 1
+        elif status == "cycle":
             cycles += 1
+        elif status == "too_large":
+            too_large += 1
+        elif status == "step_limit":
+            step_limit += 1
 
-    total = len(statuses)
+    print(name)
+    print("Reached 1:", reached_1)
+    print("Cycles:", cycles)
+    print("Grew too large:", too_large)
+    print("Step limit reached:", step_limit)
+    print("Proportion reaching 1:", round(reached_1 / len(statuses), 3))
 
-    print("Proportion reaching 1:", round(hit1 / total, 3))
 
-    results_summary.append((name, hit1, hitcap, cycles))
-
+def plot_variant_lengths(name, label, N, a, b, max_steps=100, cap=10**6):
+    n_val, lengths, max_vals, statuses = variant_simulations(N, a, b, max_steps=max_steps, cap=cap)
 
     plt.figure()
     plt.plot(n_val, lengths, marker='o', markersize=3, linewidth=0.8)
     plt.xlabel("Starting value")
     plt.ylabel("Sequence length")
-    plt.title(name)
+    plt.title(name + " : sequence length")
     plt.grid(True, alpha=0.3)
     plt.savefig("figures/section3/lengths_" + label + "_N" + str(N) + ".png")
     plt.show()
+
+
+def plot_variant_max_values(name, label, N, a, b, max_steps=100, cap=10**6):
+    n_val, lengths, max_vals, statuses = variant_simulations(N, a, b, max_steps=max_steps, cap=cap)
 
     plt.figure()
     plt.plot(n_val, max_vals, marker='o', markersize=3, linewidth=0.8)
@@ -128,19 +142,34 @@ for name, label, a, b in variants:
     plt.savefig("figures/section3/max_values_" + label + "_N" + str(N) + ".png")
     plt.show()
 
+# --- --- --- --- --- --- ---
 
+# Plots and outputs:
 
-print("\n---")
-print("Summary of variant behaviour:")
-print("---")
+variants = [
+    ("Standard Collatz (3n+1)", "3n1", 3, 1),
+    ("Variant 5n+1", "5n1", 5, 1),
+    ("Variant 5n+3", "5n3", 5, 3)]
 
+start = 7
+N = 50
+max_steps = 100
+cap = 10**6
 
-for name, hit1, hitcap, cycles in results_summary:
+for name, label, a, b in variants:
+    print("\n-----------------------------")
     print(name)
-    print("Reached 1:", hit1)
-    print("Hit cap:", hitcap)
-    print("Cycles:", cycles)
-    print()
+
+    seq, status = variant_sequence(start, a, b, max_steps=max_steps, cap=cap)
+
+    print("Starting value =", start)
+    print("Status:", status)
+    print("Sequence:", seq)
+
+    summary_variant(name, N, a, b, max_steps=max_steps, cap=cap)
+
+    plot_variant_lengths(name, label, N, a, b, max_steps=max_steps, cap=cap)
+    plot_variant_max_values(name, label, N, a, b, max_steps=max_steps, cap=cap)
 
 
 #& "C:\Users\georg\anaconda3.0\python.exe" -m sections.section3_variants

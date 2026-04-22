@@ -4,6 +4,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Created a folder to save the plots 
+# This is added to prevent the code from breaking when run for the first time
+import os
+os.makedirs("figures/section1", exist_ok=True)
+
 # --- --- --- --- --- --- ---
 
 # Core functions:
@@ -13,9 +18,9 @@ def validate_input(n):
     Checks if input is valid (researched how to raise TypeError)
     '''
     
-    if type(n)!=int:
+    if type(n) != int:
         raise TypeError("n must be an integer")
-    if n<=0:
+    if n <= 0:
         raise ValueError("n must be positive")
 
     
@@ -25,10 +30,10 @@ def one_step(n):
     '''
     validate_input(n)
 
-    if n%2==0:
-        return n//2
+    if n % 2 == 0:
+        return n // 2
     else:
-        return 3*n+1
+        return 3*n + 1
     
    
 def collatz_sequence(n):
@@ -39,7 +44,7 @@ def collatz_sequence(n):
 
     seq = [n]
 
-    while seq[-1]!=1:
+    while seq[-1] != 1:
         seq.append(one_step(seq[-1]))
     return seq
 
@@ -49,7 +54,7 @@ def stopping_time(n):
     Number of steps needed to reach 1
     '''
 
-    return len(collatz_sequence(n))-1
+    return len(collatz_sequence(n)) - 1
 
 
 def max_excursion(n):
@@ -62,21 +67,20 @@ def max_excursion(n):
 
 def collatz_simulations(N):
     '''
-    Run Collatz simulations for 1<=n<=N.
+    Run Collatz simulations for 1 <= n <= N.
 
     Returns three lists:
     - starting values
     - stopping times
     - maximum excursions
     '''
-
     validate_input(N)
 
     starting_values = []
     stopping_times = []
     max_values = []
 
-    for n in range(1,N+1):
+    for n in range(1, N+1):
 
         starting_values.append(n)
         stopping_times.append(stopping_time(n))
@@ -86,8 +90,8 @@ def collatz_simulations(N):
 
 # --- --- --- --- --- --- ---
 
-# Functions to create outputs:
-# Using the predefined functions above.
+# Functions to summarise and visualise results
+# (using the predefined functions above).
 
 def summary_values(N):
     # Prints basic stats for the 1 to N values
@@ -162,7 +166,7 @@ def stopping_vs_excursion(N):
 
 # Plots and outputs:
 
-N_values = [50, 100, 200, 500, 1000]
+N_values = [50, 200, 500]
 # Values of N we will consider up to (e.g. collatz_sequence(n), from 1 to N)
 
 for N in N_values:
@@ -175,5 +179,3 @@ for N in N_values:
     plot_stopping_time(N)
     plot_max_excursion(N)
     stopping_vs_excursion(N)
-
-# Note ADD lukes - graph in report
