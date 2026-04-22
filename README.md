@@ -8,6 +8,18 @@ Some content overlaps with the written report, but the mathematics has been expl
 
 This file provides the marker with essential information on how the project is structured and how to navigate it.
 
+
+## How to Run
+
+The project has been structured so that, provided all files in the repository are accessible, there is no strict need to run the code.
+
+The PDF submission contains the outputs from the investigations presented in the Jupyter notebook, which can be read and followed independently.
+
+Additionally, plots for each section are already saved in the `figures/` folder, so results can be viewed without running the code.
+
+However, if required, each section can be run independently to reproduce the results and view the full outputs. For example: `python section1.py`
+
+
 ## Report Structure
 
 ### Jupyter Notebook:
@@ -15,8 +27,6 @@ This file provides the marker with essential information on how the project is s
 - `collatz_notebook.ipynb`
 
 This is the final submission for this component (submitted as a PDF). The notebook contains the explanations of the code, the results obtained, and further discussion.
-
-
 
 ### Python Files:
 
@@ -34,11 +44,13 @@ These are then plotted to show how behaviour changes as the starting value incre
 
 #### `section2.py` - Further analysis of Structure
 
+This section focuses on additional structural properties of the Collatz sequence. (PLACEHOLDER)
+
 #### `section3.py` - Variants of the Collatz Rule
 
-Explores how the sequence changes behaviour when we modify the rule of the Collatz sequence.
+Explores how the behaviour of the sequence changes when we modify the Collatz rule.
 
-We examine two different variant and compare the results with the standard rule. We do this by comparing:
+We examine two different variants and compare the results with the standard rule. We do this by comparing:
 
 - if the sequences eventually reach 1
 - how long the sequences are
@@ -54,23 +66,6 @@ This section investigates:
 - how nodes branch  
 - how values spread across levels  
 
----
-
-## How to Run
-
-The project has been structured so that, provided all files in the repository are accessible, there is no strict need to run the code.
-
-The PDF submission contains the outputs from the investigations presented in the Jupyter notebook, which can be read and followed independently.
-
-Additionally, plots for each section are already saved in the `figures/` folder, so results can be viewed without running the code.
-
-However, if required, each section can be run independently to reproduce the results and view the full outputs. For example:
-
-```bash
-python section1.py
-```
-
----
 
 ## Contributions
 
@@ -82,4 +77,12 @@ Below lists the group contributions for this part of the project.
 - Section 3 (Variants of the Collatz Rule): Yu & George
 - Section 4 (Collatz Tree): George
 
-Other group members had greater contribution to the seperate project report.
+Other group members had greater contribution to the separate project report.
+
+## Final Recap
+
+This repository contains the markdown of the final PDF alongside all the finalized code that was used to obtain the results in the project. The notebook is a write up of the main investigation, which is supported by the Python code and plots.
+
+Thank you for taking the time to read through this project.
+
+---
