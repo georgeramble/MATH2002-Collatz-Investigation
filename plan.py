@@ -24,3 +24,7 @@
 #
 # Goal:
 # Connect empirical irregularity to structural properties of the map.
+
+git add .
+git commit -m "Final submission1"
+git push
