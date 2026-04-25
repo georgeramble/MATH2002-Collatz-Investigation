@@ -137,7 +137,7 @@ def plot_max_excursion(N):
     plt.grid(True, alpha=0.3)
 
     ymax = np.percentile(max_exc, 95)  # zoom into plot to make more readable
-    plt.ylim(0, ymax)
+    plt.ylim(1, ymax)
 
     plt.title("Maximum excursion for 1 ≤ n ≤ " + str(N))
     plt.savefig("figures/section1/max_excursion_N" + str(N) + ".png")

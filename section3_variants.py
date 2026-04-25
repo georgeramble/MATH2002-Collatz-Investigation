@@ -42,7 +42,7 @@ def variant_sequence(start, a, b, max_steps=100, cap=10**6):
     sequence = [start]
     seen = {start}
     n = start
-    status = "step_limit"
+    status = "iteration_limit_reached"
 
     for i in range(max_steps):
         if n == 1:
@@ -96,7 +96,7 @@ def summary_variant(name, N, a, b, max_steps=100, cap=10**6):
     reached_1 = 0
     cycles = 0
     too_large = 0
-    step_limit = 0
+    iteration_limit_reached = 0
 
     for status in statuses:
         if status == "reached_1":
@@ -105,14 +105,14 @@ def summary_variant(name, N, a, b, max_steps=100, cap=10**6):
             cycles += 1
         elif status == "too_large":
             too_large += 1
-        elif status == "step_limit":
-            step_limit += 1
+        elif status == "iteration_limit_reached":
+            iteration_limit_reached += 1
 
     print(name)
     print("Reached 1:", reached_1)
     print("Cycles:", cycles)
     print("Grew too large:", too_large)
-    print("Step limit reached:", step_limit)
+    print("Step limit reached:", iteration_limit_reached)
     print("Proportion reaching 1:", round(reached_1 / len(statuses), 3))
 
 
