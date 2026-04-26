@@ -112,7 +112,7 @@ def summary_variant(name, N, a, b, max_steps=100, cap=10**6):
     print("Reached 1:", reached_1)
     print("Cycles:", cycles)
     print("Grew too large:", too_large)
-    print("Step limit reached:", iteration_limit_reached)
+    print("Iteration limit reached:", iteration_limit_reached)
     print("Proportion reaching 1:", round(reached_1 / len(statuses), 3))
 
 
