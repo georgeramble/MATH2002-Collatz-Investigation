@@ -158,14 +158,6 @@ cap = 10**6
 
 for name, label, a, b in variants:
     print("\n-----------------------------")
-    print(name)
-
-    seq, status = variant_sequence(start, a, b, max_steps=max_steps, cap=cap)
-
-    print("Starting value =", start)
-    print("Status:", status)
-    print("Sequence:", seq)
-
     summary_variant(name, N, a, b, max_steps=max_steps, cap=cap)
 
     plot_variant_lengths(name, label, N, a, b, max_steps=max_steps, cap=cap)
