@@ -146,5 +146,3 @@ for level in levels:
 
 print("Total nodes discovered:", len(all_nodes))
 print("Largest value discovered:", max(all_nodes))
-
-#git add . ; git commit -m "collatz tree functions update" ; git push origin main
