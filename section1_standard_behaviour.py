@@ -157,7 +157,7 @@ def stopping_vs_excursion(N):
     plt.grid(True, alpha=0.3)
 
     ymax = np.percentile(max_exc, 95)
-    plt.ylim(0, ymax)
+    plt.ylim(1, ymax)
 
     plt.title("Stopping time vs max excursion (1 ≤ n ≤ " + str(N) + ")")
     plt.savefig("figures/section1/stopping_vs_excursion_N" + str(N) + ".png")
