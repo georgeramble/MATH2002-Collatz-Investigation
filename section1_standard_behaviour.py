@@ -94,8 +94,9 @@ def collatz_simulations(N):
 # (using the predefined functions above).
 
 def summary_values(N):
-    # Prints basic stats for the 1 to N values
-
+    '''
+    Prints basic stats for the 1 to N values
+    '''
     n_val, stop_t, max_exc = collatz_simulations(N)
 
     max_stopping = max(stop_t)

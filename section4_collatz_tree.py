@@ -65,84 +65,110 @@ def tree_generator(depth):
 
 # --- --- --- --- --- --- ---
 
-# Plots and outputs:
+# Functions to summarise and visualise results:
 
 # Print first few levels
-depth = 8
-levels = tree_generator(depth)
+def print_tree_levels(levels):
+    '''
+    Print the first few levels of the tree, and the number of nodes in each level
+    '''
+    print("\nTree structure:")
 
-print("\nTree structure:")
-
-for i in range(len(levels)):
-    print("Level", i, ":", levels[i])
-    print("Nodes in level:", len(levels[i]))
-    print()
+    for i in range(len(levels)):
+        print("Level", i, ":", levels[i])
+        print("Nodes in level:", len(levels[i]))
+        print()
 
 
 # Plot number of nodes in each level
-sizes = []
-for level in levels:
-    sizes.append(len(level))
+def plot_tree_growth(levels, depth):
+    '''
+    Plot the number of nodes at each level of the Collatz tree
+    '''
+    sizes = []
 
-plt.figure()
-plt.plot(range(len(sizes)), sizes, marker='o')
-plt.xlabel("Tree depth")
-plt.ylabel("Number of nodes")
-plt.grid(True, alpha=0.3)
+    for level in levels:
+        sizes.append(len(level))
 
-plt.title("Growth of the Collatz tree (depth = " + str(depth) + ")")
-plt.savefig("figures/section4/tree_growth_depth_" + str(depth) + ".png")
-
-plt.show()
+    plt.figure()
+    plt.plot(range(len(sizes)), sizes, marker='o')
+    plt.xlabel("Tree depth")
+    plt.ylabel("Number of nodes")
+    plt.grid(True, alpha=0.3)
+    plt.title("Growth of the Collatz tree (depth = " + str(depth) + ")")
+    plt.savefig("figures/section4/tree_growth_depth_" + str(depth) + ".png")
+    plt.show()
 
 
 # Plot largest value in each level
-max_values = []
-for level in levels:
-    if len(level) > 0:
-        max_values.append(max(level))
-    else:
-        max_values.append(0)
+def plot_tree_max_values(levels, depth):
+    '''
+    Plot the largest value in each level of the Collatz tree
+    '''
+    max_values = []
 
-plt.figure()
-plt.plot(range(len(max_values)), max_values, marker='o')
-plt.xlabel("Tree depth")
-plt.ylabel("Largest value")
-plt.grid(True, alpha=0.3)
+    for level in levels:
+        if len(level) > 0:
+            max_values.append(max(level))
+        else:
+            max_values.append(0)
 
-plt.title("Largest value in Collatz tree levels (depth = " + str(depth) + ")")
-plt.savefig("figures/section4/tree_max_values_depth_" + str(depth) + ".png")
-
-plt.show()
+    plt.figure()
+    plt.plot(range(len(max_values)), max_values, marker='o')
+    plt.xlabel("Tree depth")
+    plt.ylabel("Largest value")
+    plt.grid(True, alpha=0.3)
+    plt.title("Largest value in Collatz tree levels (depth = " + str(depth) + ")")
+    plt.savefig("figures/section4/tree_max_values_depth_" + str(depth) + ".png")
+    plt.show()
 
 
 # Scatter plot of nodes by depth
-x_vals = []
-y_vals = []
+def plot_tree_scatter(levels, depth):
+    '''
+    Scatter plot of nodes by tree depth
+    '''
+    x_vals = []
+    y_vals = []
 
-for level_num, level in enumerate(levels):
-    for node in level:
-        x_vals.append(level_num)
-        y_vals.append(node)
+    for level_num, level in enumerate(levels):
+        for node in level:
+            x_vals.append(level_num)
+            y_vals.append(node)
 
-plt.figure()
-plt.scatter(x_vals, y_vals, s=10)
-plt.xlabel("Tree depth")
-plt.ylabel("Node value")
-plt.yscale("log")
-plt.grid(True, alpha=0.3)
-
-plt.title("Nodes in the Collatz tree by depth")
-plt.savefig("figures/section4/tree_nodes_scatter_depth_" + str(depth) + ".png")
-
-plt.show()
+    plt.figure()
+    plt.scatter(x_vals, y_vals, s=10)
+    plt.xlabel("Tree depth")
+    plt.ylabel("Node value")
+    plt.yscale("log")
+    plt.grid(True, alpha=0.3)
+    plt.title("Nodes in the Collatz tree by depth")
+    plt.savefig("figures/section4/tree_nodes_scatter_depth_" + str(depth) + ".png")
+    plt.show()
 
 
 # List all nodes discovered
-all_nodes = []
+def tree_summary(levels):
+    '''
+    Prints a summary for a Collatz tree of a given depth
+    '''
+    all_nodes = []
 
-for level in levels:
-    all_nodes.extend(level)
+    for level in levels:
+        all_nodes.extend(level)
 
-print("Total nodes discovered:", len(all_nodes))
-print("Largest value discovered:", max(all_nodes))
+    print("Total nodes discovered:", len(all_nodes))
+    print("Largest value discovered:", max(all_nodes))
+
+# --- --- --- --- --- --- ---
+
+# Plots and outputs:
+
+depth = 8
+levels = tree_generator(depth)
+
+print_tree_levels(levels)
+plot_tree_growth(levels, depth)
+plot_tree_max_values(levels, depth)
+plot_tree_scatter(levels, depth)
+tree_summary(levels)

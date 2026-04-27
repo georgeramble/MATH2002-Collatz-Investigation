@@ -162,6 +162,3 @@ for name, label, a, b in variants:
 
     plot_variant_lengths(name, label, N, a, b, max_steps=max_steps, cap=cap)
     plot_variant_max_values(name, label, N, a, b, max_steps=max_steps, cap=cap)
-
-
-#& "C:\Users\georg\anaconda3.0\python.exe" -m sections.section3_variants
