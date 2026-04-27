@@ -42,7 +42,7 @@ This section looks at the basic structure of the standard Collatz sequence and i
 
 These are then plotted to show how behaviour changes as the starting value increases.
 
-#### `section2.py` - Further Structural Analysis of the sequence
+#### `section2.py` - Further Structural Analysis
 
 This section focuses on additional structural properties of the Collatz sequence.
 
