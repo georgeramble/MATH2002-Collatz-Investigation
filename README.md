@@ -42,9 +42,11 @@ This section looks at the basic structure of the standard Collatz sequence and i
 
 These are then plotted to show how behaviour changes as the starting value increases.
 
-#### `section2.py` - Further analysis of Structure
+#### `section2.py` - Further Structural Analysis of the sequence
 
-This section focuses on additional structural properties of the Collatz sequence. (PLACEHOLDER)
+This section focuses on additional structural properties of the Collatz sequence.
+
+For example, we will look at quantaties such as parity, record breakers, stopping time, and maximum excursion.
 
 #### `section3.py` - Variants of the Collatz Rule
 
