@@ -33,6 +33,17 @@ def variant_step(n, a, b):
         return a * n + b
 
 
+def find_cycle(sequence):
+    '''
+    Checks if a sequence has repeated a value
+    '''
+    for i in range(len(sequence)):
+        for j in range(i + 1, len(sequence)):
+            if sequence[i] == sequence[j]:
+                return sequence[i:j + 1]
+    return []
+
+
 def variant_sequence(start, a, b, max_steps=100, cap=10**6):
     '''
     Generates a full sequence for a Collatz-type rule
@@ -40,9 +51,9 @@ def variant_sequence(start, a, b, max_steps=100, cap=10**6):
     validate_input(start)
 
     sequence = [start]
-    seen = {start}
     n = start
     status = "iteration_limit_reached"
+    cycle = []
 
     for i in range(max_steps):
         if n == 1:
@@ -56,13 +67,13 @@ def variant_sequence(start, a, b, max_steps=100, cap=10**6):
             status = "too_large"
             break
 
-        if n in seen:
+        cycle = find_cycle(sequence)
+
+        if cycle != []:
             status = "cycle"
             break
 
-        seen.add(n)
-
-    return sequence, status
+    return sequence, status, cycle
 
 
 def variant_simulations(N, a, b, max_steps=100, cap=10**6):
@@ -77,7 +88,7 @@ def variant_simulations(N, a, b, max_steps=100, cap=10**6):
     statuses = []
 
     for n in range(1, N + 1):
-        seq, status = variant_sequence(n, a, b, max_steps=max_steps, cap=cap)
+        seq, status, cycle = variant_sequence(n, a, b, max_steps=max_steps, cap=cap)
 
         starting_values.append(n)
         lengths.append(len(seq) - 1)
@@ -142,6 +153,29 @@ def plot_variant_max_values(name, label, N, a, b, max_steps=100, cap=10**6):
     plt.savefig("figures/section3/max_values_" + label + "_N" + str(N) + ".png")
     plt.show()
 
+
+def plot_sequence_if_cycle(name, label, start, a, b, max_steps=100, cap=10**6):
+    seq, status, cycle = variant_sequence(start, a, b, max_steps=max_steps, cap=cap)
+
+    print("\nCycle check for", name)
+    print("Starting value:", start)
+    print("Status:", status)
+    print("Sequence:", seq)
+
+    if cycle != []:
+        print("Cycle found:", cycle)
+
+        plt.figure()
+        plt.plot(range(len(seq)), seq, marker='o', markersize=4, linewidth=1)
+        plt.xlabel("Step")
+        plt.ylabel("Value")
+        plt.title(name + " cycle from n=" + str(start))
+        plt.grid(True, alpha=0.3)
+        plt.savefig("figures/section3/cycle_" + label + "_start" + str(start) + ".png")
+        plt.show()
+    else:
+        print("No cycle found")
+
 # --- --- --- --- --- --- ---
 
 # Plots and outputs:
@@ -162,3 +196,9 @@ for name, label, a, b in variants:
 
     plot_variant_lengths(name, label, N, a, b, max_steps=max_steps, cap=cap)
     plot_variant_max_values(name, label, N, a, b, max_steps=max_steps, cap=cap)
+
+
+# Cycle plot example:
+# (For variant 5n+3)
+
+plot_sequence_if_cycle("Variant 5n+3","5n3", 3, 5, 3, max_steps=max_steps, cap=cap)
